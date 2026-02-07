@@ -1,0 +1,488 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Computer Science Department - Information Portal</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            background: linear-gradient(135deg, #f5f7fa 0%, #e4e8ec 100%);
+        }
+        /* Navigation */
+        nav ul {
+            list-style-type: none;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0;
+            background: linear-gradient(90deg, #1e3a5f 0%, #2d5a87 100%);
+            padding: 0;
+            margin: 20px 0 30px 0;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+        nav ul li {
+            flex: 1;
+            min-width: 80px;
+        }
+        nav ul li a {
+            display: block;
+            padding: 14px 20px;
+            color: #fff;
+            text-decoration: none;
+            text-align: center;
+            font-weight: 500;
+            transition: background 0.3s ease, color 0.3s ease;
+        }
+        nav ul li a:hover {
+            background: rgba(255, 255, 255, 0.2);
+            color: #a8d4ff;
+        }
+        /* Main heading and intro */
+        h1 {
+            color: #1e3a5f;
+            margin-bottom: 15px;
+            font-size: 2.2em;
+            border-bottom: 3px solid #2d5a87;
+            padding-bottom: 10px;
+        }
+        .intro {
+            margin-bottom: 40px;
+            padding: 20px;
+            background: #fff;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.08);
+            text-align: justify;
+        }
+        /* Section headings */
+        h2 {
+            color: #2d5a87;
+            margin: 35px 0 20px 0;
+            font-size: 1.6em;
+        }
+        /* Faculty table */
+        .faculty-table-wrapper {
+            overflow-x: auto;
+            margin-bottom: 40px;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+        table.faculty-table {
+            width: 100%;
+            border-collapse: collapse;
+            background: #fff;
+        }
+        table.faculty-table caption {
+            caption-side: top;
+            font-size: 1.2em;
+            font-weight: bold;
+            color: #1e3a5f;
+            padding: 12px;
+            background: #e8eef5;
+            border-radius: 8px 8px 0 0;
+        }
+        table.faculty-table th,
+        table.faculty-table td {
+            padding: 12px 16px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+        table.faculty-table th {
+            background: #2d5a87;
+            color: #fff;
+            font-weight: 600;
+        }
+        table.faculty-table tbody tr:nth-child(even) {
+            background-color: #f2f6fa;
+        }
+        table.faculty-table tbody tr:nth-child(odd) {
+            background-color: #fff;
+        }
+        table.faculty-table tbody tr:hover {
+            background-color: #cce0f5 !important;
+        }
+        /* Timetable */
+        .timetable-wrapper {
+            overflow-x: auto;
+            margin-bottom: 40px;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+        table.timetable {
+            width: 100%;
+            border-collapse: collapse;
+            background: #fff;
+            table-layout: fixed;
+        }
+        table.timetable caption {
+            caption-side: top;
+            font-size: 1.2em;
+            font-weight: bold;
+            color: #1e3a5f;
+            padding: 12px;
+            background: #e8eef5;
+            border-radius: 8px 8px 0 0;
+        }
+        table.timetable th,
+        table.timetable td {
+            padding: 14px 10px;
+            border: 1px solid #ccc;
+            text-align: center;
+            font-size: 0.9em;
+            height: 50px;
+        }
+        table.timetable th {
+            background: #2d5a87;
+            color: #fff;
+            font-weight: 600;
+        }
+        /* Vertical zebra via colgroup */
+        table.timetable col.time-col {
+            background-color: #e8eef5;
+        }
+        table.timetable col.mon-col { background-color: #fff; }
+        table.timetable col.tue-col { background-color: #f8f9fa; }
+        table.timetable col.wed-col { background-color: #fff; }
+        table.timetable col.thu-col { background-color: #f8f9fa; }
+        table.timetable col.fri-col { background-color: #fff; }
+        /* Horizontal zebra on rows */
+        table.timetable tbody tr:nth-child(even) td {
+            background-color: rgba(232, 238, 245, 0.5);
+        }
+        table.timetable tbody tr:nth-child(odd) td.time-col {
+            background-color: #e8eef5;
+        }
+        table.timetable tbody tr:nth-child(even) td.time-col {
+            background-color: #d4dce8;
+        }
+        table.timetable tbody tr:hover td {
+            background-color: #cce0f5 !important;
+        }
+        /* Facilities section */
+        .facilities-section {
+            background: #fff;
+            padding: 25px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.08);
+            margin-bottom: 40px;
+        }
+        .facilities-section h3 {
+            color: #2d5a87;
+            margin: 20px 0 12px 0;
+            font-size: 1.2em;
+        }
+        .facilities-section ul.disc-list {
+            list-style-type: disc;
+            margin-left: 25px;
+            margin-bottom: 15px;
+        }
+        .facilities-section ul.circle-list {
+            list-style-type: circle;
+            margin-left: 25px;
+            margin-bottom: 15px;
+        }
+        .facilities-section ul.square-list {
+            list-style-type: square;
+            margin-left: 25px;
+            margin-bottom: 15px;
+        }
+        .facilities-section ul li {
+            margin: 6px 0;
+        }
+        .facilities-section ol.upper-alpha {
+            list-style-type: upper-alpha;
+            margin-left: 25px;
+            margin-bottom: 15px;
+        }
+        .facilities-section ol.lower-alpha {
+            list-style-type: lower-alpha;
+            margin-left: 25px;
+            margin-bottom: 15px;
+        }
+        .facilities-section ol.upper-roman {
+            list-style-type: upper-roman;
+            margin-left: 25px;
+            margin-bottom: 15px;
+        }
+        .facilities-section ol.lower-roman {
+            list-style-type: lower-roman;
+            margin-left: 25px;
+            margin-bottom: 15px;
+        }
+        .facilities-section ol.custom-start {
+            list-style-type: decimal;
+            margin-left: 25px;
+            margin-bottom: 15px;
+        }
+        .facilities-section ol.custom-start li {
+            margin: 6px 0;
+        }
+        dl {
+            margin: 15px 0;
+        }
+        dl dt {
+            font-weight: bold;
+            color: #1e3a5f;
+            margin-top: 12px;
+            margin-bottom: 4px;
+        }
+        dl dd {
+            margin-left: 25px;
+            margin-bottom: 8px;
+            color: #555;
+        }
+        /* Contact / Footer */
+        footer {
+            margin-top: 40px;
+            padding: 20px;
+            background: #1e3a5f;
+            color: #fff;
+            border-radius: 8px;
+            text-align: center;
+        }
+        footer a {
+            color: #a8d4ff;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Department of Computer Science - Information Portal</h1>
+        <p class="intro">
+            Welcome to the Computer Science Department Information Portal. Our department is committed to excellence in teaching and research, offering undergraduate and postgraduate programs in Computer Science and Information Technology. We provide a strong foundation in programming, algorithms, data structures, and software engineering, along with state-of-the-art laboratories and experienced faculty to guide students toward successful careers in the tech industry.
+        </p>
+    </header>
+
+    <nav>
+        <ul>
+            <li><a href="#home">Home</a></li>
+            <li><a href="#faculty">Faculty</a></li>
+            <li><a href="#timetable">Timetable</a></li>
+            <li><a href="#facilities">Facilities</a></li>
+            <li><a href="#contact">Contact</a></li>
+        </ul>
+    </nav>
+
+    <main>
+        <section id="home">
+            <h2>About the Department</h2>
+            <p>The Department of Computer Science was established in 1995 and has since grown into one of the premier departments of the college. We offer B.Sc. and M.Sc. programs in Computer Science with modern curricula aligned with industry needs.</p>
+        </section>
+
+        <section id="faculty">
+            <h2>Faculty Details</h2>
+            <div class="faculty-table-wrapper">
+                <table class="faculty-table">
+                    <caption>Faculty Information - Academic Year 2024-25</caption>
+                    <thead>
+                        <tr>
+                            <th>Faculty Name</th>
+                            <th>Designation</th>
+                            <th>Subject Handled</th>
+                            <th>Experience</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Dr. Rajesh Kumar</td>
+                            <td>Professor &amp; HOD</td>
+                            <td>Data Structures, Algorithms</td>
+                            <td>18 years</td>
+                        </tr>
+                        <tr>
+                            <td>Dr. Priya Sharma</td>
+                            <td>Associate Professor</td>
+                            <td>Database Management Systems</td>
+                            <td>12 years</td>
+                        </tr>
+                        <tr>
+                            <td>Prof. Amit Singh</td>
+                            <td>Assistant Professor</td>
+                            <td>Programming in C, Python</td>
+                            <td>8 years</td>
+                        </tr>
+                        <tr>
+                            <td>Prof. Sneha Patel</td>
+                            <td>Assistant Professor</td>
+                            <td>Web Technologies, Java</td>
+                            <td>6 years</td>
+                        </tr>
+                        <tr>
+                            <td>Prof. Vikram Reddy</td>
+                            <td>Assistant Professor</td>
+                            <td>Computer Networks, OS</td>
+                            <td>5 years</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <section id="timetable">
+            <h2>Weekly Class Timetable</h2>
+            <div class="timetable-wrapper">
+                <table class="timetable">
+                    <caption>B.Sc. Computer Science - Semester IV (Section A) - Weekly Schedule</caption>
+                    <colgroup>
+                        <col class="time-col" span="1">
+                        <col class="mon-col" span="1">
+                        <col class="tue-col" span="1">
+                        <col class="wed-col" span="1">
+                        <col class="thu-col" span="1">
+                        <col class="fri-col" span="1">
+                    </colgroup>
+                    <thead>
+                        <tr>
+                            <th>Time</th>
+                            <th>Monday</th>
+                            <th>Tuesday</th>
+                            <th>Wednesday</th>
+                            <th>Thursday</th>
+                            <th>Friday</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>9:00 - 10:00</td>
+                            <td>Data Structures</td>
+                            <td>DBMS</td>
+                            <td>Programming Lab</td>
+                            <td>Computer Networks</td>
+                            <td>Web Tech</td>
+                        </tr>
+                        <tr>
+                            <td>10:00 - 11:00</td>
+                            <td>DBMS</td>
+                            <td>Algorithms</td>
+                            <td>Programming Lab</td>
+                            <td>Data Structures</td>
+                            <td>Java</td>
+                        </tr>
+                        <tr>
+                            <td rowspan="2">11:15 - 12:45</td>
+                            <td>Algorithms</td>
+                            <td>Web Tech</td>
+                            <td>Operating Systems</td>
+                            <td>DBMS Lab</td>
+                            <td>Computer Networks</td>
+                        </tr>
+                        <tr>
+                            <td colspan="5" style="background:#e8eef5; font-style:italic;">Break: 12:00 - 12:15</td>
+                        </tr>
+                        <tr>
+                            <td>2:00 - 3:00</td>
+                            <td>Operating Systems</td>
+                            <td>Java</td>
+                            <td>Algorithms</td>
+                            <td>Web Tech Lab</td>
+                            <td>Seminar</td>
+                        </tr>
+                        <tr>
+                            <td>3:00 - 4:00</td>
+                            <td>Lab Session</td>
+                            <td>Lab Session</td>
+                            <td>—</td>
+                            <td>—</td>
+                            <td>—</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <section id="facilities" class="facilities-section">
+            <h2>Facilities &amp; Resources</h2>
+
+            <h3>General Department Facilities </h3>
+            <ul class="disc-list">
+                <li>Central Computing Lab with 60 workstations</li>
+                <li>High-speed internet connectivity (Wi-Fi)</li>
+                <li>Department library with technical books and journals</li>
+                <li>Seminar hall with audio-visual equipment</li>
+            </ul>
+            <ul class="circle-list">
+                <li>Project development lab for final-year students</li>
+                <li>Server room for networking experiments</li>
+                <li>Printing and photocopy facility</li>
+            </ul>
+            <ul class="square-list">
+                <li>Smart classrooms with projectors</li>
+                <li>24×7 access lab for research scholars</li>
+                <li>Career guidance and placement cell</li>
+                <li>Student activity room
+                    <ul class="circle-list">
+                        <li>Coding club meetings</li>
+                        <li>Tech talk sessions</li>
+                        <li>Group study area</li>
+                    </ul>
+                </li>
+            </ul>
+
+            <h3>Laboratory Usage Rules </h3>
+            <p><strong>Primary rules :</strong></p>
+            <ol class="upper-alpha">
+                <li>Carry your identity card at all times</li>
+                <li>Do not bring food or drinks inside the lab</li>
+                <li>Report any hardware or software malfunction immediately</li>
+            </ol>
+            <p><strong>Do's and Don'ts :</strong></p>
+            <ol class="lower-alpha">
+                <li>Save your work frequently</li>
+                <li>Log out before leaving your system</li>
+                <li>Use only assigned systems</li>
+            </ol>
+            <p><strong>Safety guidelines :</strong></p>
+            <ol class="upper-roman">
+                <li>Follow fire safety norms</li>
+                <li>Keep emergency exits clear</li>
+                <li>Know the location of first-aid kit</li>
+            </ol>
+            <p><strong>Additional rules :</strong></p>
+            <ol class="lower-roman">
+                <li>No unauthorized software installation</li>
+                <li>Respect lab timings and slot allocations</li>
+            </ol>
+            <p><strong>Numbering from custom value :</strong></p>
+            <ol class="custom-start" start="5">
+                <li>Rule five: Maintain silence during lab hours</li>
+                <li>Rule six: Submit lab reports on time</li>
+                <li>Rule seven: Do not remove any equipment without permission</li>
+            </ol>
+
+            <h3>Key Department Terms (Description List)</h3>
+            <dl>
+                <dt>HOD</dt>
+                <dd>Head of Department; the senior faculty member who leads the department and oversees academic and administrative matters.</dd>
+                <dt>DBMS</dt>
+                <dd>Database Management System; a software for storing, retrieving, and managing data in databases.</dd>
+                <dt>Lab Slot</dt>
+                <dd>A fixed time period allocated to a batch of students for practical sessions in the computer laboratory.</dd>
+                <dt>Placement Cell</dt>
+                <dd>A dedicated unit that coordinates with companies for campus recruitment and trains students for interviews.</dd>
+                <dt>Seminar</dt>
+                <dd>Weekly session where students or guest speakers present on technical topics to enhance learning beyond the curriculum.</dd>
+            </dl>
+        </section>
+
+        <section id="contact">
+            <h2>Contact Information</h2>
+            <p>Department of Computer Science, Main Building, Block B, 2nd Floor.<br>
+            Phone: +91-XXX-XXXXXXX | Email: csdept@college.edu</p>
+        </section>
+    </main>
+
+    <footer id="contact-footer">
+        <p><strong>College Department Information</strong> &copy; 2024-25. For queries, <a href="mailto:csdept@college.edu">contact the department</a>.</p>
+    </footer>
+</body>
+</html>
